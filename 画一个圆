@@ -1,0 +1,33 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+double x(int i, int r)
+{
+	int y = abs(i - r);
+	double x = sqrt(r * r - y * y);
+	return x;
+}
+int main()
+{
+	int r = 200;
+	for (int i = 1;i <= 2*r-1;i++)
+	{
+		for (int j = 1;j <= 2*r-1;j++)
+		{
+			if ((r-x(i,r)+0.5)<=j&&j< (r - x(i, r)+1.5))
+			{
+				printf("88");
+				continue;
+			}
+			if (r + x(i, r) -1 <= j&&j < r + x(i, r) + 1)
+			{
+				printf("88");
+				break;
+			}
+			printf("  ");
+		}
+		printf("\n");
+	}
+	return 0;
+}
