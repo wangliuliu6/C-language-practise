@@ -1,0 +1,97 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include<math.h>
+#include<stdlib.h>
+#define MAXLINE 80
+#define M1 26
+#define M2 10
+int main(void)
+{
+	int i=0, offest,offest1,offest2,jiamijiemi;
+	char str[MAXLINE];
+	printf("加密输入1，解密输入其他：");
+	scanf("%d", &jiamijiemi);
+	getchar();
+	printf("输入英文和数字文本，以回车结束：");
+	while ((str[i] = getchar()) != '\n')
+		{
+			i++;
+		}
+	str[i] = '\0';
+	printf("输入从原文到密文的偏移量，正增负减：");
+	scanf("%d", &offest);
+	offest1 = offest % 26;
+	offest2 = offest % 10;
+	if (jiamijiemi == 1)//加密
+	{
+		for (i = 0;str[i] != '\0';i++)
+		{
+			if ('a' <= str[i] && str[i] <= 'z')//小写字母加密
+			{
+				if (((str[i] - 'a' + offest1) >= 0) && ((str[i] - 'a' + offest1) < M1))
+					str[i] += offest1;
+				else if((str[i] - 'a' + offest1) < 0)
+					str[i] += offest1+M1;
+				else
+					str[i] += offest1 - M1;
+			}
+			else if ('A' <= str[i] && str[i] <= 'Z')//大写字母加密
+			{
+				if (((str[i] - 'A' + offest1) >= 0) && ((str[i] - 'A' + offest1) < M1))
+					str[i] += offest1;
+				else if((str[i] - 'A' + offest1) < 0)
+					str[i] += offest1+M1;
+				else
+					str[i] += offest1 - M1;
+			}
+			else if ('0' <= str[i] && str[i] <= '9')//数字加密
+			{
+				if (((str[i] - '0' + offest2) >= 0) && ((str[i] - '0' + offest2) < M2))
+					str[i] += offest2;
+				else if ((str[i] - '0' + offest2) < 0)
+					str[i] += offest2 + M2;
+				else
+					str[i] += offest2 - M2;
+			}
+		}
+	}
+	else if (jiamijiemi !=1)//解密
+	{
+		for (i = 0;str[i] != '\0';i++)
+		{
+			if ('a' <= str[i] && str[i] <= 'z')//小写字母解密
+			{
+				if (((str[i] - 'a' - offest1) >= 0) && ((str[i] - 'a' - offest1) < M1))
+					str[i] -= offest1;
+				else if((str[i] - 'a' - offest1) < 0)
+					str[i] = str[i]-offest1+M1;
+				else
+					str[i] = str[i]-offest1 - M1;
+			}
+			else if ('A' <= str[i] && str[i] <= 'Z')//大写字母解密
+			{
+				if (((str[i] - 'A' - offest1) >= 0) && ((str[i] - 'A' - offest1) < M1))
+					str[i] -= offest1;
+				else if((str[i] - 'A' - offest1) < 0)
+					str[i] = str[i]-offest1+M1;
+				else
+					str[i] = str[i]-offest1 - M1;
+			}
+			else if ('0' <= str[i] && str[i] <= '9')//数字解密
+			{
+				if (((str[i] - '0' - offest2) >= 0) && ((str[i] - '0' - offest2) < M2))
+					str[i] -= offest2;
+				else if ((str[i] - '0' - offest2) < 0)
+					str[i] = str[i] - offest2 + M2;
+				else
+					str[i] = str[i] - offest2 - M2;
+			}
+		}
+	}
+	for (i = 0;str[i] != '\0';i++)
+	{
+		putchar(str[i]);
+	}
+	printf("\n");
+	return 0;
+}
